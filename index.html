@@ -60,7 +60,8 @@
             transform: translateX(-50%);
             width: 30px;
             height: 3px;
-            background-color: #111827; /* Changed to dark gray/black */
+            /* --- FIX: Changed color back to pink --- */
+            background-color: #ec4899; /* Pink! */
             border-radius: 2px;
         }
 
@@ -96,43 +97,33 @@
     </style>
 </head>
 <!-- 
-  * FULL SCREEN FIX: Removed padding from body.
-  * BACKGROUND FIX: Set to a neutral gray to see the app "frame".
+  * LAYOUT FIX: Set background on the body, set h-full.
 -->
-<body class="bg-gray-200">
+<body class="bg-[#f9f9f9] h-full">
 
     <!-- 
-      * FULL SCREEN FIX: This is now the main app container.
-      * It's constrained to a phone's width ('max-w-sm') and centered ('mx-auto').
-      * It's set to the full screen height ('h-screen') with 'overflow-hidden'.
-      * BACKGROUND FIX: Set to your requested '#f9f9f9'.
-      * Removed 'rounded-2xl' and 'shadow-xl' to get rid of the "frame".
+      * LAYOUT FIX: This container is now a 'flex flex-col'
+      * and 'h-screen'. This forces it to be exactly the
+      * screen's height and stack its children vertically.
     -->
-    <div class="w-full max-w-sm mx-auto bg-[#f9f9f9] h-screen overflow-hidden">
+    <div class="w-full max-w-sm mx-auto bg-[#f9f9f9] h-screen overflow-hidden flex flex-col">
         
-        <div class="relative w-full h-full">
+        <!-- 
+          * LAYOUT FIX: 'flex-shrink: 0' prevents this from shrinking
+        -->
+        <header class="text-center bg-[#6589d3] py-3 flex-shrink-0" style="padding-top: calc(0.75rem + env(safe-area-inset-top));">
+            <h1 class="text-base font-semibold text-white">Opiskelijakortti</h1>
+        </header>
 
-            <!-- 1. Mock Phone Status Bar (REMOVED) -->
-
-            <!-- 
-              * SAFE AREA FIX 2: Added safe-area padding to the header.
-              * We removed 'py-3' and added an inline style.
-              * 'env(safe-area-inset-top)' is a variable given by the browser
-              * that knows the exact height of the notch/dynamic island.
-            -->
-            <header class="text-center bg-[#6589d3]" style="padding-top: calc(0.75rem + env(safe-area-inset-top)); padding-bottom: 0.75rem;">
-                <h1 class="text-base font-semibold text-white">Opiskelijakortti</h1>
-            </header>
-
-            <!-- 
-              * SAFE AREA FIX 3: Updated height calculation for main content.
-              * This now subtracts the header, the nav, *and* the safe areas
-              * to get the *perfect* scrollable height.
-            -->
-            <main class="overflow-y-auto px-6 pb-24" style="height: calc(100% - (calc(0.75rem + env(safe-area-inset-top)) + 0.75rem + 1.5rem) - calc(80px + env(safe-area-inset-bottom)));">
-                
-                <!-- Profile Picture Section -->
-                <section class="flex flex-col items-center mt-6">
+        <!-- 
+          * LAYOUT FIX: 'flex-1' is the magic.
+          * This makes the <main> element grow to fill ALL
+          * available space between the header and nav bar.
+        -->
+        <main class="overflow-y-auto px-6 flex-1">
+            
+            <!-- Profile Picture Section -->
+            <section class="flex flex-col items-center mt-6">
                     
                     <!-- 
                       * GLOW FIX: Added 'inline-block'
@@ -170,73 +161,18 @@
                     </div>
                 </section>
 
-                <!-- User Info Section -->
-                <section class="text-center mt-6">
-                    <!-- Updated with the name from your screenshot -->
-                    <h2 class="text-2xl font-bold text-gray-900">Nooa Adams</h2>
-                    <p class="text-gray-500 mt-1 text-sm">26-10-2003</p>
-                </section>
-                
-                <!-- Divider Line -->
-                <hr class="my-4 border-gray-200">
+        </main>
 
-                <!-- University Info Section -->
-                <section class="flex justify-between items-center">
-                    <div>
-                        <p class="text-gray-900 font-semibold">Oulun yliopisto</p>
-                        <p class="text-gray-500 text-sm">Korkeakouluopiskelija</p>
-                    </div>
-                    <!-- SYL Logo Placeholder (stroke-width 2) -->
-                    <!-- Replaced the SVG placeholder with your 'syl_logo.jpg' image -->
-                    <div class="text-blue-800">
-                        <img class="w-12 h-12 object-contain" 
-                             src="./syl_logo.jpg" 
-                             alt="SYL Logo"
-                             onerror="this.src='https://placehold.co/48x48/FFF/333?text=SYL'; this.onerror=null;">
-                    </div>
-                </section>
-
-                <!-- 
-                  * DIVIDER FIX: Added a new divider line here.
-                -->
-                <hr class="my-4 border-gray-200">
-
-                <!-- Validity Info Section -->
-                <section class="mt-8">
-                    <div class="flex items-center space-x-2">
-                        <!-- Heroicon: check-circle (filled) -->
-                        <svg class="w-6 h-6 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.06-1.06l-3.25 3.25-1.5-1.5a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.06 0l4.5-4.5Z" clip-rule="evenodd" />
-                        </svg>
-                        <span class="text-green-600 font-semibold">Voimassa</span>
-                    </div>
-                    <p class="text-3xl font-bold text-gray-900 mt-1">30.09.2026 asti</p>
-                </section>
-
-                <!-- 
-                  * WHITESPACE FIX: Reduced top/bottom margin from 'mt-10 mb-6' to 'mt-8 mb-4'
-                -->
-                <section class="mt-8 mb-4">
-                    <!-- 
-                      * BUTTON COLOR FIX: Changed 'bg-blue-600' to 'bg-[#6589d3]'
-                    -->
-                    <button class="w-full bg-[#6589d3] hover:bg-opacity-90 text-white font-semibold py-4 px-6 rounded-full text-lg shadow-md transition duration-200">
-                        Opiskelijakortin tarkastus
-                    </button>
-                </section>
-
-            </main>
-
-            <!-- 
-              * 4. Bottom Navigation Bar 
-              * SAFE AREA FIX 4: Added safe-area padding to the nav bar.
-              * This ensures the icons are not hidden behind the home bar.
-              * We adjusted the height and padding-bottom to account for it.
-            -->
-            <nav class="absolute bottom-0 left-0 right-0 w-full bg-white border-t border-gray-200 flex justify-around items-center pt-2" style="height: calc(80px + env(safe-area-inset-bottom)); padding-bottom: calc(1rem + env(safe-area-inset-bottom));">
-                
-                <!-- Nav Item 1: Edut (stroke-width 2) -->
-                <a href="#" class="flex flex-col items-center text-gray-500 hover:text-gray-900 w-1/4">
+        <!-- 
+          * 4. Bottom Navigation Bar 
+          * LAYOUT FIX: 'flex-shrink: 0' prevents shrinking.
+          * 'h-20' (80px) sets a fixed height.
+          * The 'padding-bottom' now *only* adds space for the home bar.
+        -->
+        <nav class="relative w-full bg-white border-t border-gray-200 flex justify-around items-center h-20 pt-2 flex-shrink-0" style="padding-bottom: env(safe-area-inset-bottom);">
+            
+            <!-- Nav Item 1: Edut (stroke-width 2) -->
+            <a href="#" class="flex flex-col items-center text-gray-500 hover:text-gray-900 w-1/4">
                     <!-- Heroicon: magnifying-glass -->
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
                     <span class="text-xs mt-1">Edut</span>
