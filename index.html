@@ -13,9 +13,7 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* * FIX 1: The 'profile-glow' div is now 'inline-block' in the HTML,
-         * so it only wraps its content (the image) instead of stretching
-         * full-width. This will stop the "smeared" glow.
+        /* * HALO EFFECT: This creates the blue halo.
          * The '::before' pseudo-element creates the glow itself.
         */
         .profile-glow::before {
@@ -25,6 +23,7 @@
             left: -12px;
             right: -12px;
             bottom: -12px;
+            /* This is the light blue gradient for the halo */
             background: linear-gradient(135deg, #a2d2ff, #bde0fe, #c6e8ff);
             border-radius: 50%;
             filter: blur(20px);
@@ -32,8 +31,8 @@
             z-index: -1; /* Puts glow behind the parent div */
         }
 
-        /* * FIX 2: Added a pink underline as requested.
-         * I also changed the active nav text color to dark gray instead of blue.
+        /* * NAV GLITCH FIX: The original screenshot has a dark underline.
+         * Changed the background-color to a dark gray.
         */
         .nav-active::after {
             content: '';
@@ -43,59 +42,45 @@
             transform: translateX(-50%);
             width: 30px;
             height: 3px;
-            background-color: #ec4899; /* Changed to Frank pink */
+            background-color: #111827; /* Changed to dark gray/black */
             border-radius: 2px;
         }
 
-        /* * FIX 3: This is the pulse animation for the 'frank' logo.
-         * This CSS definition is unchanged, but the HTML it applies to is fixed.
-        */
-        @keyframes pulse-ring {
-          0% {
-            /* Start matching the logo size, with 25% opacity */
-            transform: scale(1);
-            opacity: 0.25;
-          }
-          100% {
-            /* Grow 25% larger and fade out */
-            transform: scale(1.25);
-            opacity: 0;
-          }
-        }
-
-        /* * This styles the dedicated pulse-ring div.
-         * We are animating a border, as requested.
-        */
-        .pulse-ring {
-          /* This creates the ring color (Tailwind pink-500) */
-          border: 3px solid #ec4899; 
-          
-          /* Apply the animation */
-          animation-name: pulse-ring;
-          animation-duration: 1s; /* "exactly a second" */
-          animation-timing-function: ease-out; /* "fast then slightly slower" */
-          animation-iteration-count: infinite; /* Loop forever */
+        /* <!-- ... existing code ... -->
         }
     </style>
 </head>
-<body class="bg-gray-100 flex justify-center p-4">
+<!-- 
+  * FULL SCREEN FIX: Removed padding from body.
+  * BACKGROUND FIX: Set to a neutral gray to see the app "frame".
+-->
+<body class="bg-gray-200">
 
-    <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden" style="height: 844px;">
+    <!-- 
+      * FULL SCREEN FIX: This is now the main app container.
+      * It's constrained to a phone's width ('max-w-sm') and centered ('mx-auto').
+      * It's set to the full screen height ('h-screen') with 'overflow-hidden'.
+      * BACKGROUND FIX: Set to your requested '#f9f9f9'.
+      * Removed 'rounded-2xl' and 'shadow-xl' to get rid of the "frame".
+    -->
+    <div class="w-full max-w-sm mx-auto bg-[#f9f9f9] h-screen overflow-hidden">
         
         <div class="relative w-full h-full">
 
-            <!-- 1. Mock Phone Status Bar (Icons updated to stroke-width-2) -->
-            <!-- This entire block is being removed -->
+            <!-- 1. Mock Phone Status Bar (REMOVED) -->
 
-            <!-- 2. App Header -->
-            <header class="text-center py-3">
-                <h1 class="text-base font-semibold text-gray-800">Opiskelijakortti</h1>
+            <!-- 
+              * HEADER COLOR FIX: Added 'bg-[#6589d3]' and 'text-white'.
+            -->
+            <header class="text-center py-3 bg-[#6589d3]">
+                <h1 class="text-base font-semibold text-white">Opiskelijakortti</h1>
             </header>
 
-            <!-- 3. Main content area -->
-            <!-- We make it scrollable (overflow-y-auto) and give it padding-bottom to avoid the nav bar -->
-            <!-- Adjusted height calculation to account for header (48px) now that status bar is gone -->
-            <main class="overflow-y-auto px-6 pb-24" style="height: calc(100% - 48px);">
+            <!-- 
+              * MAIN AREA HEIGHT FIX: Height is now calculated based on header (48px)
+              * AND nav bar (80px) to fill the screen perfectly. (100% - 128px)
+            -->
+            <main class="overflow-y-auto px-6 pb-24" style="height: calc(100% - 48px - 80px);">
                 
                 <!-- Profile Picture Section -->
                 <section class="flex flex-col items-center mt-6">
@@ -108,9 +93,9 @@
                     <div class="relative inline-block profile-glow">
                         
                         <!-- The Profile Picture -->
-                        <!-- MAKE SURE TO CHANGE THIS to your image file -->
+                        <!-- PICTURE FIX: Updated 'src' to your new file name -->
                         <img class="w-36 h-36 rounded-full border-4 border-white object-cover shadow-md" 
-                             src="./venla.jpg" 
+                             src="./2C2682D2-AA39-4007-A824-EC1AD06D9485.JPG" 
                              alt="Profiilikuva"
                              onerror="this.src='https://placehold.co/144x144/E0E7FF/333?text=Venla'; this.onerror=null;">
                         
@@ -144,7 +129,6 @@
                 </section>
                 
                 <!-- Divider Line -->
-                <!-- Adjusted margin from my-6 to my-4 to better match reference -->
                 <hr class="my-4 border-gray-200">
 
                 <!-- University Info Section -->
@@ -163,6 +147,11 @@
                     </div>
                 </section>
 
+                <!-- 
+                  * DIVIDER FIX: Added a new divider line here.
+                -->
+                <hr class="my-4 border-gray-200">
+
                 <!-- Validity Info Section -->
                 <section class="mt-8">
                     <div class="flex items-center space-x-2">
@@ -175,16 +164,25 @@
                     <p class="text-3xl font-bold text-gray-900 mt-1">30.09.2026 asti</p>
                 </section>
 
-                <!-- Action Button Section -->
-                <section class="mt-10 mb-6">
-                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-full text-lg shadow-md transition duration-200">
+                <!-- 
+                  * WHITESPACE FIX: Reduced top/bottom margin from 'mt-10 mb-6' to 'mt-8 mb-4'
+                -->
+                <section class="mt-8 mb-4">
+                    <!-- 
+                      * BUTTON COLOR FIX: Changed 'bg-blue-600' to 'bg-[#6589d3]'
+                    -->
+                    <button class="w-full bg-[#6589d3] hover:bg-opacity-90 text-white font-semibold py-4 px-6 rounded-full text-lg shadow-md transition duration-200">
                         Opiskelijakortin tarkastus
                     </button>
                 </section>
 
             </main>
 
-            <!-- 4. Bottom Navigation Bar -->
+            <!-- 
+              * 4. Bottom Navigation Bar 
+              * Note: This remains 'bg-white' as per the original screenshot,
+              * which provides a nice contrast to the new '#f9f9f9' app background.
+            -->
             <nav class="absolute bottom-0 left-0 right-0 w-full bg-white border-t border-gray-200 flex justify-around items-center pt-2 pb-4" style="height: 80px;">
                 
                 <!-- Nav Item 1: Edut (stroke-width 2) -->
@@ -196,9 +194,8 @@
                 
                 <!-- 
                   * Nav Item 2: Opiskelijakortti (Active) 
-                  * FIX: Changed to SOLID icon (fill="currentColor")
-                  * FIX: Changed text to 'text-gray-900'
-                  * FIX: 'nav-active' class now adds a PINK underline (see <style>)
+                  * FIX: The 'nav-active' class now correctly renders a dark
+                  * underline, which I changed in the <style> block.
                 -->
                 <a href="#" class="relative flex flex-col items-center text-gray-900 font-semibold w-1/4 nav-active">
                     <!-- Heroicon: credit-card (SOLID) -->
