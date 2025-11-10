@@ -83,7 +83,7 @@
                         <!-- The Profile Picture -->
                         <!-- We use a placeholder image. Replace the 'src' with your girlfriend's photo if you have it -->
                         <img class="w-36 h-36 rounded-full border-4 border-white object-cover shadow-md" 
-                             src="https://placehold.co/144x144/E0E7FF/333?text=Venla" 
+                             src="./2C2682D2-AA39-4007-A824-EC1AD06D9485.JPG" 
                              alt="Profiilikuva"
                              onerror="this.src='https://placehold.co/144x144/E0E7FF/333?text=Bilde'; this.onerror=null;">
                         
