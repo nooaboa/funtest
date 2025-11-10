@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opiskelijakortti</title>
+    <!-- 1. We're loading Tailwind CSS from a CDN (Content Delivery Network) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 2. We're loading the "Inter" font family, which is similar to the one in the app -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* 3. A few custom styles that are easier to write here than with Tailwind */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* This creates the soft blue glow behind the profile picture */
+        .profile-glow {
+            position: relative;
+            z-index: 10;
+        }
+        .profile-glow::before {
+            content: '';
+            position: absolute;
+            /* Adjust size and position of the glow */
+            top: -12px; 
+            left: -12px;
+            right: -12px;
+            bottom: -12px;
+            /* This is the gradient from the screenshot */
+            background: linear-gradient(135deg, #a2d2ff, #bde0fe, #c6e8ff);
+            /* This makes it a circle */
+            border-radius: 50%;
+            /* This blurs the element */
+            filter: blur(20px);
+            /* This makes it slightly transparent */
+            opacity: 0.7;
+            /* Puts the glow behind the picture */
+            z-index: -1;
+        }
+
+        /* This creates the little blue underline for the active nav item */
+        .nav-active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px; /* Positioned 2px from the bottom of the icon container */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px; /* Width of the underline */
+            height: 3px;
+            background-color: #2563EB; /* A standard blue color */
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center p-4">
+
+    <!-- We create a container that looks like a phone screen -->
+    <!-- max-w-sm limits width, bg-white is background, rounded-2xl gives it app corners, shadow-xl for depth -->
+    <!-- overflow-hidden is important to keep the bottom nav inside the rounded corners -->
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden" style="height: 844px;"> <!-- iPhone 12/13 Pro height -->
+        
+        <!-- This container holds all the app content and the bottom nav -->
+        <!-- position: relative is key so the nav bar can be position: absolute inside it -->
+        <div class="relative w-full h-full">
+
+
+            <!-- 2. App Header -->
+            <header class="text-center py-3">
+                <h1 class="text-base font-semibold text-gray-800">Opiskelijakortti</h1>
+            </header>
+
+            <!-- 3. Main content area -->
+            <!-- We make it scrollable (overflow-y-auto) and give it padding-bottom to avoid the nav bar -->
+            <main class="overflow-y-auto px-6 pb-24" style="height: calc(100% - 60px);"> <!-- Full height minus header and nav -->
+                
+                <!-- Profile Picture Section -->
+                <section class="flex flex-col items-center mt-6">
+                    <!-- This div has the custom glow style -->
+                    <div class="relative profile-glow">
+                        <!-- The Profile Picture -->
+                        <!-- We use a placeholder image. Replace the 'src' with your girlfriend's photo if you have it -->
+                        <img class="w-36 h-36 rounded-full border-4 border-white object-cover shadow-md" 
+                             src="https://placehold.co/144x144/E0E7FF/333?text=Venla" 
+                             alt="Profiilikuva"
+                             onerror="this.src='https://placehold.co/144x144/E0E7FF/333?text=Bilde'; this.onerror=null;">
+                        
+                        <!-- The 'frank' Logo -->
+                        <!-- position: absolute places it on top of the parent (which needs position: relative) -->
+                        <div class="absolute bottom-1 right-1 w-14 h-14 bg-pink-500 rounded-full flex items-center justify-center border-4 border-white">
+                            <span class="text-white font-bold text-lg italic -skew-y-6">frank</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- User Info Section -->
+                <section class="text-center mt-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Venla Ruohomäki</h2>
+                    <p class="text-gray-500 mt-1 text-sm">18-06-2003</p>
+                </section>
+                
+                <!-- Divider Line -->
+                <hr class="my-6 border-gray-200">
+
+                <!-- University Info Section -->
+                <!-- flex justify-between puts items on opposite ends -->
+                <section class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-900 font-semibold">Oulun yliopisto</p>
+                        <p class="text-gray-500 text-sm">Korkeakouluopiskelija</p>
+                    </div>
+                    <!-- SYL Logo Placeholder (Heroicon: building-library) -->
+                    <div class="text-blue-800">
+                        <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6M3 9v11.25M21 9v11.25M3 9h18M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+                        </svg>
+                    </div>
+                </section>
+
+                <!-- Validity Info Section -->
+                <section class="mt-8">
+                    <div class="flex items-center space-x-2">
+                        <!-- Heroicon: check-circle (filled) -->
+                        <svg class="w-6 h-6 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.06-1.06l-3.25 3.25-1.5-1.5a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.06 0l4.5-4.5Z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="text-green-600 font-semibold">Voimassa</span>
+                    </div>
+                    <p class="text-3xl font-bold text-gray-900 mt-1">30.09.2026 asti</p>
+                </section>
+
+                <!-- Action Button Section -->
+                <section class="mt-10 mb-6">
+                    <!-- w-full makes it full-width, rounded-full gives it the pill shape -->
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-full text-lg shadow-md transition duration-200">
+                        Opiskelijakortin tarkastus
+                    </button>
+                </section>
+
+            </main>
+
+
+            <!-- 4. Bottom Navigation Bar -->
+            <!-- position: absolute sticks it to the bottom of the "phone" container -->
+            <nav class="absolute bottom-0 left-0 right-0 w-full bg-white border-t border-gray-200 flex justify-around items-center pt-2 pb-4" style="height: 80px;">
+                
+                <!-- Nav Item 1: Edut -->
+                <a href="#" class="flex flex-col items-center text-gray-500 hover:text-blue-600 w-1/4">
+                    <!-- Heroicon: magnifying-glass -->
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
+                    <span class="text-xs mt-1">Edut</span>
+                </a>
+                
+                <!-- Nav Item 2: Opiskelijakortti (Active) -->
+                <!-- We add text-blue-600 and font-semibold to make it active -->
+                <!-- The relative and nav-active classes add the custom underline -->
+                <a href="#" class="relative flex flex-col items-center text-blue-600 font-semibold hover:text-blue-600 w-1/4 nav-active">
+                    <!-- Heroicon: credit-card -->
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 21.75Z" /></svg>
+                    <span class="text-xs mt-1">Opiskelijakortti</span>
+                </a>
+                
+                <!-- Nav Item 3: Viestit (with notification) -->
+                <a href="#" class="relative flex flex-col items-center text-gray-500 hover:text-blue-600 w-1/4">
+                    <!-- Notification Badge -->
+                    <div class="absolute -top-1 right-5 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
+                    <!-- Heroicon: bell -->
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a23.842 23.842 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
+                    <span class="text-xs mt-1">Viestit</span>
+                </a>
+                
+                <!-- Nav Item 4: Menu -->
+                <a href="#" class="flex flex-col items-center text-gray-500 hover:text-blue-600 w-1/4">
+                    <!-- Heroicon: bars-3 -->
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                    <span class="text-xs mt-1">Menu</span>
+                </a>
+            </nav>
+
+        </div>
+    </div>
+
+</body>
+</html>
