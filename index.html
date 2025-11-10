@@ -4,58 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opiskelijakortti</title>
-    <!-- 1. We're loading Tailwind CSS from a CDN (Content Delivery Network) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 2. We're loading the "Inter" font family, which is similar to the one in the app -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* 3. A few custom styles that are easier to write here than with Tailwind */
         body {
             font-family: 'Inter', sans-serif;
         }
 
-        /* This creates the soft blue glow behind the profile picture */
-        .profile-glow {
-            position: relative;
-            z-index: 10;
-        }
+        /* * FIX 1: The 'profile-glow' div is now 'inline-block' in the HTML,
+         * so it only wraps its content (the image) instead of stretching
+         * full-width. This will stop the "smeared" glow.
+         * The '::before' pseudo-element creates the glow itself.
+        */
         .profile-glow::before {
             content: '';
             position: absolute;
-            /* Adjust size and position of the glow */
             top: -12px; 
             left: -12px;
             right: -12px;
             bottom: -12px;
-            /* This is the gradient from the screenshot */
             background: linear-gradient(135deg, #a2d2ff, #bde0fe, #c6e8ff);
-            /* This makes it a circle */
             border-radius: 50%;
-            /* This blurs the element */
             filter: blur(20px);
-            /* This makes it slightly transparent */
             opacity: 0.7;
-            /* Puts the glow behind the picture */
-            z-index: -1;
+            z-index: -1; /* Puts glow behind the parent div */
         }
 
-        /* This creates the little blue underline for the active nav item */
+        /* * FIX 2: Added a pink underline as requested.
+         * I also changed the active nav text color to dark gray instead of blue.
+        */
         .nav-active::after {
             content: '';
             position: absolute;
-            bottom: 2px; /* Positioned 2px from the bottom of the icon container */
+            bottom: 2px;
             left: 50%;
             transform: translateX(-50%);
-            width: 30px; /* Width of the underline */
+            width: 30px;
             height: 3px;
-            background-color: #2563EB; /* A standard blue color */
+            background-color: #ec4899; /* Changed to Frank pink */
             border-radius: 2px;
         }
 
-/* --- Add these new rules for the pulse animation --- */
-        
+        /* * FIX 3: This is the pulse animation for the 'frank' logo.
+         * This CSS definition is unchanged, but the HTML it applies to is fixed.
+        */
         @keyframes pulse-ring {
           0% {
             /* Start matching the logo size, with 25% opacity */
@@ -69,18 +63,12 @@
           }
         }
 
+        /* * This styles the dedicated pulse-ring div.
+         * We are animating a border, as requested.
+        */
         .pulse-ring {
-          position: absolute;
-          /* Position it to perfectly cover the logo */
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          
-          /* This is the ring's color (Tailwind pink-500) */
-          /* It's a ring, not a disc, so we use a border */
+          /* This creates the ring color (Tailwind pink-500) */
           border: 3px solid #ec4899; 
-          border-radius: 50%; /* Must be a circle */
           
           /* Apply the animation */
           animation-name: pulse-ring;
@@ -88,21 +76,25 @@
           animation-timing-function: ease-out; /* "fast then slightly slower" */
           animation-iteration-count: infinite; /* Loop forever */
         }
-
-        /* --- End of new rules --- */
     </style>
 </head>
 <body class="bg-gray-100 flex justify-center p-4">
 
-    <!-- We create a container that looks like a phone screen -->
-    <!-- max-w-sm limits width, bg-white is background, rounded-2xl gives it app corners, shadow-xl for depth -->
-    <!-- overflow-hidden is important to keep the bottom nav inside the rounded corners -->
-    <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden" style="height: 844px;"> <!-- iPhone 12/13 Pro height -->
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden" style="height: 844px;">
         
-        <!-- This container holds all the app content and the bottom nav -->
-        <!-- position: relative is key so the nav bar can be position: absolute inside it -->
         <div class="relative w-full h-full">
 
+            <!-- 1. Mock Phone Status Bar (Icons updated to stroke-width-2) -->
+            <div class="px-5 pt-3 flex justify-between items-center text-sm font-semibold text-gray-800">
+                <span>12.40</span>
+                <div class="flex items-center space-x-1">
+                    <!-- Heroicon: signal (stroke-width 2) -->
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.288 15.038a5.25 5.25 0 0 1 7.424 0M5.106 11.856c3.807-3.807 9.98-3.807 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0" /></svg>
+                    <span class="text-xs font-semibold">4G</span>
+                    <!-- Heroicon: battery (stroke-width 2) -->
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H21M4.5 10.5v2.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V10.5m-15 0h15v-2.25c0-.621-.504-1.125-1.125-1.125H5.625c-.621 0-1.125.504-1.125 1.125v2.25Z" /></svg>
+                </div>
+            </div>
 
             <!-- 2. App Header -->
             <header class="text-center py-3">
@@ -110,38 +102,50 @@
             </header>
 
             <!-- 3. Main content area -->
-            <!-- We make it scrollable (overflow-y-auto) and give it padding-bottom to avoid the nav bar -->
-            <main class="overflow-y-auto px-6 pb-24" style="height: calc(100% - 60px);"> <!-- Full height minus header and nav -->
+            <main class="overflow-y-auto px-6 pb-24" style="height: calc(100% - 60px);">
                 
                 <!-- Profile Picture Section -->
                 <section class="flex flex-col items-center mt-6">
-                    <!-- This div has the custom glow style -->
-                    <div class="relative profile-glow">
-                        <!-- The Profile Picture -->
-                        <!-- We use a placeholder image. Replace the 'src' with your girlfriend's photo if you have it -->
-                        <img class="w-36 h-36 rounded-full border-4 border-white object-cover shadow-md" 
-                             src="./2C2682D2-AA39-4007-A824-EC1AD06D9485.JPG" 
-                             alt="Profiilikuva"
-                             onerror="this.src='https://placehold.co/144x144/E0E7FF/333?text=Bilde'; this.onerror=null;">
+                    
+                    <!-- 
+                      * GLOW FIX: Added 'inline-block'
+                      * This forces the div to be only as wide as its content,
+                      * preventing the glow from "smearing" across the page.
+                    -->
+                    <div class="relative inline-block profile-glow">
                         
-                       <!-- The 'frank' Logo -->
-                        <!-- We add 'relative' so we can position the pulse-ring inside it -->
-                        <div class="relative absolute bottom-1 right-1 w-14 h-14 rounded-full border-4 border-white shadow-md">
+                        <!-- The Profile Picture -->
+                        <!-- Replaced src with your screenshot's image. Update this to your file! -->
+                        <img class="w-36 h-36 rounded-full border-4 border-white object-cover shadow-md" 
+                             src="./venla.jpg" <!-- MAKE SURE TO CHANGE THIS to your image file -->
+                             alt="Profiilikuva"
+                             onerror="this.src='https://placehold.co/144x144/E0E7FF/333?text=Venla'; this.onerror=null;">
+                        
+                        <!-- 
+                          * LOGO FIX: Reworked HTML structure.
+                          * This outer div positions the whole logo chunk.
+                          * Changed to bottom-0 right-0 for a tighter fit.
+                        -->
+                        <div class="absolute bottom-0 right-0 w-14 h-14">
                             
-                            <!-- The 'frank.png' image -->
-                            <!-- This is the logo itself. We add rounded-full to match the container -->
-                            <img class="w-full h-full rounded-full object-cover" 
+                            <!-- The Pulsating Ring -->
+                            <!-- This div is now absolute, fills the parent, and has the animation -->
+                            <div class="pulse-ring absolute top-0 left-0 w-full h-full rounded-full"></div>
+
+                            <!-- The 'frank.png' Logo Image -->
+                            <!-- This is *also* absolute, and 'z-10' puts it ON TOP of the pulse ring. -->
+                            <!-- The border and shadow are applied here. -->
+                            <img class="absolute top-0 left-0 z-10 w-full h-full rounded-full border-4 border-white shadow-md object-cover" 
                                  src="./frank.png" 
                                  alt="Frank App Logo"
                                  onerror="this.src='https://placehold.co/56x56/EC4899/FFF?text=frank'; this.onerror=null;">
-                            
-                            <!-- The Pulsating Ring Element -->
-                            <!-- This new div will be animated with our custom CSS -->
-                            <div class="pulse-ring"></div>
                         </div>
+                    </div>
+                </section>
 
                 <!-- User Info Section -->
                 <section class="text-center mt-6">
+                    <!-- Updated with the name from your screenshot -->
                     <h2 class="text-2xl font-bold text-gray-900">Nooa Adams</h2>
                     <p class="text-gray-500 mt-1 text-sm">26-10-2003</p>
                 </section>
@@ -150,15 +154,14 @@
                 <hr class="my-6 border-gray-200">
 
                 <!-- University Info Section -->
-                <!-- flex justify-between puts items on opposite ends -->
                 <section class="flex justify-between items-center">
                     <div>
                         <p class="text-gray-900 font-semibold">Oulun yliopisto</p>
                         <p class="text-gray-500 text-sm">Korkeakouluopiskelija</p>
                     </div>
-                    <!-- SYL Logo Placeholder (Heroicon: building-library) -->
+                    <!-- SYL Logo Placeholder (stroke-width 2) -->
                     <div class="text-blue-800">
-                        <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6M3 9v11.25M21 9v11.25M3 9h18M3 21h18M12 6.75h.008v.008H12V6.75Z" />
                         </svg>
                     </div>
@@ -178,7 +181,6 @@
 
                 <!-- Action Button Section -->
                 <section class="mt-10 mb-6">
-                    <!-- w-full makes it full-width, rounded-full gives it the pill shape -->
                     <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-full text-lg shadow-md transition duration-200">
                         Opiskelijakortin tarkastus
                     </button>
@@ -186,40 +188,43 @@
 
             </main>
 
-
             <!-- 4. Bottom Navigation Bar -->
-            <!-- position: absolute sticks it to the bottom of the "phone" container -->
             <nav class="absolute bottom-0 left-0 right-0 w-full bg-white border-t border-gray-200 flex justify-around items-center pt-2 pb-4" style="height: 80px;">
                 
-                <!-- Nav Item 1: Edut -->
-                <a href="#" class="flex flex-col items-center text-gray-500 hover:text-blue-600 w-1/4">
+                <!-- Nav Item 1: Edut (stroke-width 2) -->
+                <a href="#" class="flex flex-col items-center text-gray-500 hover:text-gray-900 w-1/4">
                     <!-- Heroicon: magnifying-glass -->
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
                     <span class="text-xs mt-1">Edut</span>
                 </a>
                 
-                <!-- Nav Item 2: Opiskelijakortti (Active) -->
-                <!-- We add text-blue-600 and font-semibold to make it active -->
-                <!-- The relative and nav-active classes add the custom underline -->
-                <a href="#" class="relative flex flex-col items-center text-blue-600 font-semibold hover:text-blue-600 w-1/4 nav-active">
-                    <!-- Heroicon: credit-card -->
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 21.75Z" /></svg>
+                <!-- 
+                  * Nav Item 2: Opiskelijakortti (Active) 
+                  * FIX: Changed to SOLID icon (fill="currentColor")
+                  * FIX: Changed text to 'text-gray-900'
+                  * FIX: 'nav-active' class now adds a PINK underline (see <style>)
+                -->
+                <a href="#" class="relative flex flex-col items-center text-gray-900 font-semibold w-1/4 nav-active">
+                    <!-- Heroicon: credit-card (SOLID) -->
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M0 4.5A2.25 2.25 0 0 1 2.25 2.25h19.5A2.25 2.25 0 0 1 24 4.5v10.5A2.25 2.25 0 0 1 21.75 17.25H2.25A2.25 2.25 0 0 1 0 15V4.5ZM2.25 3.75a.75.75 0 0 0-.75.75v.75h19.5v-.75a.75.75 0 0 0-.75-.75H2.25ZM21 15v-8.25H3V15a.75.75 0 0 0 .75.75h16.5a.75.75 0 0 0 .75-.75Z" />
+                        <path d="M3 19.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm6 0a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z" />
+                    </svg>
                     <span class="text-xs mt-1">Opiskelijakortti</span>
                 </a>
                 
-                <!-- Nav Item 3: Viestit (with notification) -->
-                <a href="#" class="relative flex flex-col items-center text-gray-500 hover:text-blue-600 w-1/4">
-                    <!-- Notification Badge -->
+                <!-- Nav Item 3: Viestit (stroke-width 2) -->
+                <a href="#" class="relative flex flex-col items-center text-gray-500 hover:text-gray-900 w-1/4">
                     <div class="absolute -top-1 right-5 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
-                    <!-- Heroicon: bell -->
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a23.842 23.842 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
+                    <!-- Heroicon: bell (stroke-width 2) -->
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a23.842 23.842 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
                     <span class="text-xs mt-1">Viestit</span>
                 </a>
                 
-                <!-- Nav Item 4: Menu -->
-                <a href="#" class="flex flex-col items-center text-gray-500 hover:text-blue-600 w-1/4">
-                    <!-- Heroicon: bars-3 -->
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                <!-- Nav Item 4: Menu (stroke-width 2) -->
+                <a href="#" class="flex flex-col items-center text-gray-500 hover:text-gray-900 w-1/4">
+                    <!-- Heroicon: bars-3 (stroke-width 2) -->
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
                     <span class="text-xs mt-1">Menu</span>
                 </a>
             </nav>
