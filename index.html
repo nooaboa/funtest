@@ -53,6 +53,43 @@
             background-color: #2563EB; /* A standard blue color */
             border-radius: 2px;
         }
+
+/* --- Add these new rules for the pulse animation --- */
+        
+        @keyframes pulse-ring {
+          0% {
+            /* Start matching the logo size, with 25% opacity */
+            transform: scale(1);
+            opacity: 0.25;
+          }
+          100% {
+            /* Grow 25% larger and fade out */
+            transform: scale(1.25);
+            opacity: 0;
+          }
+        }
+
+        .pulse-ring {
+          position: absolute;
+          /* Position it to perfectly cover the logo */
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          
+          /* This is the ring's color (Tailwind pink-500) */
+          /* It's a ring, not a disc, so we use a border */
+          border: 3px solid #ec4899; 
+          border-radius: 50%; /* Must be a circle */
+          
+          /* Apply the animation */
+          animation-name: pulse-ring;
+          animation-duration: 1s; /* "exactly a second" */
+          animation-timing-function: ease-out; /* "fast then slightly slower" */
+          animation-iteration-count: infinite; /* Loop forever */
+        }
+
+        /* --- End of new rules --- */
     </style>
 </head>
 <body class="bg-gray-100 flex justify-center p-4">
@@ -87,18 +124,26 @@
                              alt="Profiilikuva"
                              onerror="this.src='https://placehold.co/144x144/E0E7FF/333?text=Bilde'; this.onerror=null;">
                         
-                        <!-- The 'frank' Logo -->
-                        <!-- position: absolute places it on top of the parent (which needs position: relative) -->
-                        <div class="absolute bottom-1 right-1 w-14 h-14 bg-pink-500 rounded-full flex items-center justify-center border-4 border-white">
-                            <span class="text-white font-bold text-lg italic -skew-y-6">frank</span>
+                       <!-- The 'frank' Logo -->
+                        <!-- We add 'relative' so we can position the pulse-ring inside it -->
+                        <div class="relative absolute bottom-1 right-1 w-14 h-14 rounded-full border-4 border-white shadow-md">
+                            
+                            <!-- The 'frank.png' image -->
+                            <!-- This is the logo itself. We add rounded-full to match the container -->
+                            <img class="w-full h-full rounded-full object-cover" 
+                                 src="./frank.png" 
+                                 alt="Frank App Logo"
+                                 onerror="this.src='https://placehold.co/56x56/EC4899/FFF?text=frank'; this.onerror=null;">
+                            
+                            <!-- The Pulsating Ring Element -->
+                            <!-- This new div will be animated with our custom CSS -->
+                            <div class="pulse-ring"></div>
                         </div>
-                    </div>
-                </section>
 
                 <!-- User Info Section -->
                 <section class="text-center mt-6">
-                    <h2 class="text-2xl font-bold text-gray-900">Venla Ruohomäki</h2>
-                    <p class="text-gray-500 mt-1 text-sm">18-06-2003</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Nooa Adams</h2>
+                    <p class="text-gray-500 mt-1 text-sm">26-10-2003</p>
                 </section>
                 
                 <!-- Divider Line -->
