@@ -151,7 +151,8 @@
                 </section>
                 
                 <!-- Divider Line -->
-                <hr class="my-6 border-gray-200">
+                <!-- Adjusted margin from my-6 to my-4 to better match reference -->
+                <hr class="my-4 border-gray-200">
 
                 <!-- University Info Section -->
                 <section class="flex justify-between items-center">
@@ -160,10 +161,12 @@
                         <p class="text-gray-500 text-sm">Korkeakouluopiskelija</p>
                     </div>
                     <!-- SYL Logo Placeholder (stroke-width 2) -->
+                    <!-- Replaced the SVG placeholder with your 'syl_logo.jpg' image -->
                     <div class="text-blue-800">
-                        <svg class="w-12 h-12" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6M3 9v11.25M21 9v11.25M3 9h18M3 21h18M12 6.75h.008v.008H12V6.75Z" />
-                        </svg>
+                        <img class="w-12 h-12 object-contain" 
+                             src="./syl_logo.jpg" 
+                             alt="SYL Logo"
+                             onerror="this.src='https://placehold.co/48x48/FFF/333?text=SYL'; this.onerror=null;">
                     </div>
                 </section>
 
